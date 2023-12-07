@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springstudy.jj.mapper.ProductMapper" >
+	
+	<select id="productList" resultType="Product">
+		SELECT 
+			no,
+			title,
+			content,
+			price,
+			file1,
+			reg_date as regDate,
+			member_id memberId,
+			writeTime
+		FROM product1
+		ORDER BY no DESC
+	</select>
+	
+	<select id="myList" resultType="Product">
+		SELECT 
+			no,
+			title,
+			content,
+			price,
+			file1,
+			reg_date as regDate,
+			member_id memberId,
+			writeTime
+		FROM product1
+		WHERE member_id = #{id}
+		ORDER BY no DESC
+	</select>
+	
+	<select id="productDetail" resultType="Product" >
+		SELECT 
+			no,
+			title,
+			content,
+			price,
+			file1,
+			reg_date as regDate,
+			member_id memberId,
+			writeTime
+		FROM product1 
+		WHERE no = #{no}
+	</select>
+	
+	<insert id="insertProduct" parameterType="Product">
+		
+		INSERT INTO product1 VALUES(null, #{title}, #{content}, #{price}, #{file1}, #{regDate}, #{memberId}, #{writeTime})
+	</insert>	
+	
+	<update id="updateProduct" parameterType="Product">
+		UPDATE product1
+			SET file1=#{file1}, price=#{price}, title=#{title}, content=#{content}, reg_date=#{regDate}, writeTime=#{writeTime}
+		WHERE no = #{no}	
+	</update>
+	
+	<delete id="deleteProduct" parameterType="int">
+		DELETE FROM product1
+		WHERE no = #{no}
+	</delete>
+	
+	<resultMap id="productResultMap" type="Product" >
+		<id property="no" column="no" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="price" column="price" />
+		<result property="file1" column="file1" />		
+		<result property="regDate" column="reg_date" />
+		<result property="memberId" column="member_id" />
+	</resultMap>
+
+</mapper>
